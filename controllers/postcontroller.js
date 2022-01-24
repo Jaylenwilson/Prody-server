@@ -9,7 +9,7 @@ router.post('/post', validateJWT, async (req, res) => {
             category: category,
             description: description,
             image: image,
-            userId: req.users.id
+            userId: req.user.id
         })
             .then(
                 post => {
