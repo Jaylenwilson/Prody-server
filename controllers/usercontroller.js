@@ -78,4 +78,11 @@ router.post('/login', async (req, res) => {
     }
 })
 
+// router.get('/userinfo', async (req, res) => {
+//     const {username, email, password, role} = req.body.users
+//     try {
+
+//     }
+// })
+
 module.exports = router;

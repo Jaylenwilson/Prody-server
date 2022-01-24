@@ -1,15 +1,15 @@
 const router = require('express').Router();
 const { models } = require('../models');
+let validateJWT = require('../middleware/validate-session');
 
-router.post('/post', async (req, res) => {
-    const { category, description, image } = req.body.post
-
+router.post('/post', validateJWT, async (req, res) => {
+    const { category, description, image } = req.body.posts
     try {
         await models.PostModel.create({
             category: category,
             description: description,
             image: image,
-            userId: req.user.id
+            userId: req.users.id
         })
             .then(
                 post => {

@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { models } = require('../models');
+let validateJWT = require('../middleware/validate-session');
 
-router.post('/comment', async (req, res) => {
+router.post('/comment', validateJWT, async (req, res) => {
     const { content, postId } = req.body.comment
 
     try {
