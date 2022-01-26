@@ -28,30 +28,30 @@ router.post('/post', validateJWT, async (req, res) => {
     };
 });
 
+// GET #2 GET ALL POST
+router.get('/postinfo', validateJWT, async (req, res) => {
+    try {
+        await models.PostModel.findAll({
+            include: [
+                {
+                    model: models.CommentsModel
+                }
 
-// router.get('/postinfo', async (req, res) => {
-//     try {
-//         await models.PostModel.findAll({
-//             include: [
-//                 {
-//                     model: models.CommentsModel
-//                 }
-
-//             ]
-//         })
-//             .then(
-//                 posts => {
-//                     res.status(200).json({
-//                         posts: posts
-//                     })
-//                 }
-//             )
-//     } catch (err) {
-//         res.status(500).json({
-//             error: `Failed to retrieve posts: ${err}`
-//         })
-//     }
-// })
+            ]
+        })
+            .then(
+                posts => {
+                    res.status(200).json({
+                        posts: posts
+                    })
+                }
+            )
+    } catch (err) {
+        res.status(500).json({
+            error: `Failed to retrieve posts: ${err}`
+        })
+    }
+})
 
 
 //DELETE #1 DELETE A USERS SPECIFIC POST
