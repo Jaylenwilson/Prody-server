@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("../db");
 
 const Posts = db.define("posts", {
+    //primary key
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -23,6 +24,7 @@ const Posts = db.define("posts", {
         type: DataTypes.STRING,
         allowNull: true
     }
+    // foreign key to reference comments tabel
 });
 
 module.exports = Posts

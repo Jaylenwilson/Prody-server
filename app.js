@@ -15,7 +15,7 @@ const controllers = require('./controllers');
 app.use('/auth', controllers.usercontroller);
 app.use(middleware.validateSession)
 app.use('/posts', controllers.postcontroller);
-app.use('/comments', controllers.postcontroller);
+app.use('/comments', controllers.commentscontroller);
 // app.use('follow', controllers.followcontroller);
 
 //try {

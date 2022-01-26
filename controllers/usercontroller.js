@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 const { Op } = require("sequelize");
 
+// POST #1 CREATE A USER
 router.post('/register', async (req, res) => {
     const { username, email, password, role } = req.body.users;
     try {
@@ -37,6 +38,8 @@ router.post('/register', async (req, res) => {
     };
 })
 
+
+//POST #2 LOGIN
 router.post('/login', async (req, res) => {
     const { username, email, password } = req.body.users;
     try {
@@ -74,6 +77,36 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         res.status(501).send({
             error: 'server does not support'
+        })
+    }
+})
+
+// GET #1 GET ALL INFO
+router.get('/userinfo', async (req, res) => {
+    try {
+        await models.UserModel.findAll({
+            include: [
+                {
+                    model: models.PostModel,
+                    include: [
+                        {
+                            model: models.CommentsModel
+                        }
+                    ]
+                }
+            ]
+        })
+            .then(
+                userinfo => {
+                    res.status(200).json({
+                        message: "userinfo recieved",
+                        userinfo: userinfo
+                    })
+                }
+            )
+    } catch (err) {
+        res.status(500).json({
+            message: `Could not retrive user info: ${errr}`
         })
     }
 })

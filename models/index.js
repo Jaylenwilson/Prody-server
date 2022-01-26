@@ -9,10 +9,12 @@ UserModel.hasMany(PostModel);
 UserModel.hasMany(CommentsModel);
 
 PostModel.belongsTo(UserModel);
-PostModel.hasMany(CommentsModel);
+PostModel.hasMany(CommentsModel, {
+    onDelete: 'CASCADE',
+});
 
-CommentsModel.belongsTo(PostModel)
-
+CommentsModel.belongsTo(PostModel);
+CommentsModel.belongsTo(UserModel);
 
 
 module.exports = {

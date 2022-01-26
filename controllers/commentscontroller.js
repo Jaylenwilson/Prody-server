@@ -2,8 +2,9 @@ const router = require('express').Router();
 const { models } = require('../models');
 let validateJWT = require('../middleware/validate-session');
 
+//#4 POST CREATE COMMENT
 router.post('/comment', validateJWT, async (req, res) => {
-    const { content, postId } = req.body.comment
+    const { content, postId } = req.body.comments
 
     try {
         await models.CommentsModel.create({
@@ -23,5 +24,10 @@ router.post('/comment', validateJWT, async (req, res) => {
         res.status(500).json({
             error: `Failed to create comment: ${err}`
         });
+        res.status(403).json({
+            error: `User does not have access: ${err}`
+        })
     };
 });
+
+module.exports = router

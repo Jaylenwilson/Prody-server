@@ -12,7 +12,9 @@ const Comments = db.define("comments", {
     content: {
         type: DataTypes.TEXT,
         required: true,
-    }
+    },
+    // foreign key to reference posts table
+
 });
 
 module.exports = Comments
