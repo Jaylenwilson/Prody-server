@@ -107,6 +107,31 @@ router.put('/edit/:userId/:id', validateJWT, async (req, res) => {
     }
 })
 
+//GET #3 GET ALL OF A SPECIFIC USERS POST
+router.get('/mypost/:userId', validateJWT, async (req, res) => {
+    const userId = req.params.userId
+
+    try {
+        await models.PostModel.findAll({
+            where: {
+                userId: userId
+            },
+        })
+            .then(
+                posts => {
+                    res.status(200).json({
+                        posts: posts,
+                        message: "All of your post have been recieved"
+                    })
+                }
+            )
+    } catch (err) {
+        res.status(500).json({
+            message: `could not retrieve your post ${err}`
+        })
+    }
+})
+
 
 
 module.exports = router;
