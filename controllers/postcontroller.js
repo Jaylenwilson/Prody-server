@@ -77,23 +77,33 @@ router.delete('/delete/:userId/:id', validateJWT, async (req, res) => {
     }
 })
 
+
+
 // UPDATE #1 UPDATE A SPECIFIC POST
-router.put('/edit/:id', validateJWT, async (req, res) => {
+router.put('/edit/:userId/:id', validateJWT, async (req, res) => {
     const { category, description, image } = req.body.posts;
     const postId = req.params.id;
-    const userId = req.user;
+    const userId = req.params.userId;
+    try {
 
-    const query = {
-        where: {
-            id: postId,
-            userId: userId
-        }
-    }
-
-    const updatedPosts = {
-        category: category,
-        description: description,
-        image: image
+        const updatedPosts = await models.PostModel.update({
+            category: category,
+            description: description,
+            image: image
+        },
+            {
+                where: {
+                    id: postId,
+                    userId: userId
+                }
+            }
+        )
+        res.status(200).json({
+            message: "post updated",
+            updatedPosts: updatedPosts
+        })
+    } catch (err) {
+        res.status(500).json({ error: err });
     }
 })
 
