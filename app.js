@@ -3,7 +3,9 @@ require('dotenv').config();
 
 const express = require('express');
 const dbConnection = require('./db');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 app.use(express.json());
 const middleware = require('./middleware');
 
@@ -21,7 +23,7 @@ app.use('/comments', controllers.commentscontroller);
 //try {
 dbConnection
     .authenticate()
-    .then(async () => await dbConnection.sync()) // force: true will drop all tables in pgAdmin and resync them. This is necessary after you make a change to a model, and need to sync any new table headers to the database.
+    .then(async () => await dbConnection.sync({})) // force: true will drop all tables in pgAdmin and resync them. This is necessary after you make a change to a model, and need to sync any new table headers to the database.
     .then(() => {
         app.listen(process.env.PORT, () => {
             console.log(`[SERVER]: App is listening on ${process.env.PORT}`);

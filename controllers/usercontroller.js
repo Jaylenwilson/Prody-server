@@ -17,7 +17,11 @@ router.post('/register', async (req, res) => {
         })
             .then(
                 user => {
+                    console.log(user)
                     let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
+
+                    // user.addRoleModel('b7dafbeb-4853-4991-ad87-65b70c69cd5d').then(a => { });
+
                     res.status(201).json({
                         user: user,
                         message: 'user created',
@@ -37,11 +41,11 @@ router.post('/register', async (req, res) => {
         };
     };
 })
-
+// 
 
 //POST #2 LOGIN
 router.post('/login', async (req, res) => {
-    const { username, email, password } = req.body.users;
+    const { username, email, password } = req.body.user;
     try {
         await models.UserModel.findOne({
             where: {

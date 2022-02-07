@@ -23,6 +23,11 @@ const Posts = db.define("posts", {
     image: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+
+    link: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
     // foreign key to reference comments tabel
 });

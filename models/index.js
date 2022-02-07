@@ -2,9 +2,29 @@ const db = require('../db');
 
 const UserModel = require('./user');
 const PostModel = require('./post');
-// const FollowModel = require('./follow');
 const CommentsModel = require('./comments');
+// const UserRoleModel = require('./userrole');
+const RoleModel = require('./role')
+// const FollowModel = require('./follow');
 
+
+// UserRoleModel.belongsToMany(UserModel);
+// UserRoleModel.belongsToMany(RoleModel)
+
+//This joins the User table and role table into one 
+/////////////////////////////////////////////////////////
+UserModel.belongsToMany(RoleModel, {
+    through: "user_roles",
+    as: "users",
+    foreignKey: "userId"
+});
+
+RoleModel.belongsToMany(UserModel, {
+    through: "user_roles",
+    as: "roles",
+    foreignKey: "roleId"
+});
+////////////////////////////////////////////////////
 UserModel.hasMany(PostModel);
 UserModel.hasMany(CommentsModel);
 

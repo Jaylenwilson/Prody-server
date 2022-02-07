@@ -4,12 +4,13 @@ let validateJWT = require('../middleware/validate-session');
 
 // POST #3 CREATE POST
 router.post('/post', validateJWT, async (req, res) => {
-    const { category, description, image } = req.body.posts
+    const { category, description, image, link } = req.body.posts
     try {
         await models.PostModel.create({
             category: category,
             description: description,
             image: image,
+            link: link,
             // foreign key from usermodel
             userId: req.user.id
         })
@@ -81,7 +82,7 @@ router.delete('/delete/:userId/:id', validateJWT, async (req, res) => {
 
 // UPDATE #1 UPDATE A SPECIFIC POST
 router.put('/edit/:userId/:id', validateJWT, async (req, res) => {
-    const { category, description, image } = req.body.posts;
+    const { category, description, image, link } = req.body.posts;
     const postId = req.params.id;
     const userId = req.params.userId;
     try {
@@ -89,7 +90,8 @@ router.put('/edit/:userId/:id', validateJWT, async (req, res) => {
         const updatedPosts = await models.PostModel.update({
             category: category,
             description: description,
-            image: image
+            image: image,
+            link: link
         },
             {
                 where: {
