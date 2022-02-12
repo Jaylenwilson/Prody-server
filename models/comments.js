@@ -10,7 +10,7 @@ const Comments = db.define("comments", {
     },
 
     content: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(450),
         required: true,
     },
     // foreign key to reference posts table

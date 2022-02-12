@@ -118,6 +118,11 @@ router.get('/mypost/:userId', validateJWT, async (req, res) => {
             where: {
                 userId: userId
             },
+            // include: [
+            //     {
+            //         model: models.UserModel
+            //     }
+            // ]
         })
             .then(
                 posts => {

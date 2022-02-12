@@ -5,12 +5,13 @@ let validateJWT = require('../middleware/validate-session');
 //#4 POST CREATE COMMENT
 router.post('/comment', validateJWT, async (req, res) => {
     const { content, postId } = req.body.comments
-
+    console.log(req.body)
     try {
         await models.CommentsModel.create({
             content: content,
             postId: postId,
             userId: req.user.id
+
         })
             .then(
                 comment => {
@@ -84,5 +85,23 @@ router.put('/edit/:userId/:postId/:id', validateJWT, async (req, res) => {
         res.status(500).json({ error: err });
     };
 });
+
+//VIEW A USERS SPECIFIC POST
+router.get('/mypost', validateJWT, async (req, res) => {
+    const { id } = req.user;
+    try {
+        const query = {
+            where: {
+                userId: id,
+            }
+        };
+        const postList = await models.PostModel.findAll(query);
+        res.status(200).json(postList);
+    } catch (error) {
+        res.status(500).json({
+            message: `Game could not be found: ${error}`
+        })
+    }
+})
 
 module.exports = router
