@@ -13,6 +13,13 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(`postgres://postgres:${process.env.DATABASE_PASSWORD}@localhost:5432/${process.env.DATABASE_NAME}`, {
     dialect: 'postgres',
+
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
 });
 
 console.log(sequelize);
